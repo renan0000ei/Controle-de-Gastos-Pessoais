@@ -1,0 +1,14 @@
+[
+    {
+        "descricao": "ok",
+        "valor": 12.0,
+        "tipo": "receita",
+        "data": "ok"
+    },
+    {
+        "descricao": "ok",
+        "valor": 3.0,
+        "tipo": "despesa",
+        "data": "ok"
+    }
+]
