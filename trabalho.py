@@ -1,6 +1,7 @@
 import json
 
 contas =  []
+Id = 0
 
 def menu():
     print("\nMenu:")
@@ -13,13 +14,31 @@ def menu():
     print("7 - Sair")
 
 def Adicionar_Receita():
-    
+    global contas
+
+    with open("dados.json", "r+", encoding="utf-8") as arquivo:
+        conteudo = arquivo.read()
+
+        if conteudo == "":
+            arquivo.write("[]")
+            arquivo.seek(0)
+
+    with open("dados.json", "r", encoding="utf-8") as arquivo:
+        contas = json.load(arquivo)
+
+    Id = 0
+
+    for controle in contas:
+        controle["id"] = Id = Id + 1
+
+    Id += 1
+
     descricao = input("digite a descrição: ")
     valor = float(input("digite seu valor: "))
     data = input("digite a data: ")
 
     controle = {
-        # "id": ID,
+        "id": Id,
         "descricao": descricao,
         "valor": valor,
         "tipo": "receita",
@@ -31,16 +50,32 @@ def Adicionar_Receita():
     with open("dados.json", "w", encoding="utf-8") as arquivo:
         json.dump(contas, arquivo, indent=4, ensure_ascii=False)
 
-    print("receita adicionada com sucesso, uhuuu yes")
-
 def Adicionar_Despesas():
+    global contas
+
+    with open("dados.json", "r+", encoding="utf-8") as arquivo:
+        conteudo = arquivo.read()
+
+        if conteudo == "":
+            arquivo.write("[]")
+            arquivo.seek(0)
+
+    with open("dados.json", "r", encoding="utf-8") as arquivo:
+        contas = json.load(arquivo)
+
+    Id = 0
+
+    for controle in contas:
+        controle["id"] = Id = Id + 1
+
+    Id += 1
 
     descricao = input("digite a descrição: ")
     valor = float(input("digite seu valor: "))
     data = input("digite a data: ")
 
     controle = {
-        # "id": ID,
+        "id": Id,
         "descricao": descricao,
         "valor": valor,
         "tipo": "despesa",
@@ -52,8 +87,6 @@ def Adicionar_Despesas():
     with open("dados.json", "w", encoding="utf-8") as arquivo:
         json.dump(contas, arquivo, indent=4, ensure_ascii=False)
 
-    print("despesas adicionada com sucesso, uhuuu yes")
-
 def Lista_Movimentações():
     global controle
 
@@ -61,7 +94,7 @@ def Lista_Movimentações():
         contas = json.load(arquivo)
 
     for controle in contas:
-        print(f"{controle["descricao"]}; {controle["valor"]}; {controle["tipo"]}; {controle["data"]}")
+        print(f"id: {controle["id"]}; descrição: {controle["descricao"]}; valor: {controle["valor"]}; tipo: {controle["tipo"]}; data: {controle["data"]}")
 
 def Consultar_Saldo():
     global saldo
@@ -77,7 +110,6 @@ def Consultar_Saldo():
 
         elif controle["tipo"] == "despesa":
             saldo = saldo - controle["valor"]
-
     print(f"seu saldo é de R${saldo}")
 
 def Excluir_Movimentação():
